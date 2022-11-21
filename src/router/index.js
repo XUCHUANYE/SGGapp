@@ -1,44 +1,42 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-import home from "../views/Home/home.vue"
-import login from "../views/Login/login.vue"
-import search from "../views/Search/search.vue"
-import register from "../views/Register/register.vue"
+import home from "../views/Home/home.vue";
+import login from "../views/Login/login.vue";
+import search from "../views/Search/search.vue";
+import register from "../views/Register/register.vue";
 
 export default new VueRouter({
-  routes:[
+  routes: [
     {
-    path:'/home',
-    component:home,
-    meta:{show:true}
+      path: "/home",
+      component: home,
+      meta: { show: true },
     },
     {
-      path:"/search/:keyword",
-      component:search,
-      meta:{show:true}
+      path: "/search/:keyword",
+      component: search,
+      meta: { show: true },
     },
     {
-      path:'/login',
-      component:login,
-      meta:{show:false}
+      path: "/login",
+      component: login,
+      meta: { show: false },
     },
     {
-      path:'/register',
-      component:register,
-      meta:{show:false}
+      path: "/register",
+      component: register,
+      meta: { show: false },
     },
     {
-      path:"/",
-      redirect:'/home'
-      
-    }
-]
-})
+      path: "/",
+      redirect: "/home",
+    },
+  ],
+});
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+  return originalPush.call(this, location).catch((err) => err);
+};
