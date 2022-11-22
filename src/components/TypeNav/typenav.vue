@@ -17,7 +17,7 @@
           <div class="item">
             <h3>
               <a href="">图书、音像、数字商品</a>
-            </h3>
+            </h3>s
             <div class="item-list clearfix">
               <div class="subitem">
                 <dl class="fore">
@@ -1694,10 +1694,13 @@
 <script>
 export default {
   name: "typenav",
-  data() {
-    return {};
-  },
-  components: {},
+  // data() {
+  //   return {};
+  // },
+  // components: {},
+  mounted(){
+    this.$store.dispatch('categoryList')
+  }
 };
 </script>
 
