@@ -21,6 +21,9 @@ export default {
     AppHeader,
     Appfooter,
   },
+  mounted(){
+    this.$store.dispatch("categoryList");
+  }
 };
 </script>
 

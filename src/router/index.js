@@ -9,6 +9,7 @@ import search from "../views/Search/search.vue";
 import register from "../views/Register/register.vue";
 
 export default new VueRouter({
+  name:'search',
   routes: [
     {
       path: "/home",
@@ -16,9 +17,11 @@ export default new VueRouter({
       meta: { show: true },
     },
     {
-      path: "/search/:keyword",
+      path: "/search/:keyword?",
       component: search,
       meta: { show: true },
+      name:"search"
+     
     },
     {
       path: "/login",

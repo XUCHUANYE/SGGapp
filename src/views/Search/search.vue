@@ -1,5 +1,5 @@
 <template>
-  <div>sousuo</div>
+  <typenav></typenav>
 </template>
 
 <script>

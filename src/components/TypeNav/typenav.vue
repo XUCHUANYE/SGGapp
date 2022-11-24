@@ -1,6 +1,6 @@
 <template>
   <div class="type-nav">
-    <div class="container">
+    <div class="container" @mouseenter="entershow" @mouseleave="leaveShow">
       <h2 class="all">全部商品分类</h2>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -12,34 +12,49 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2">
+      <transition name="sort">
+        <div class="sort" v-show="show" @mouseleave="leaveIndex()">
+        <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
             v-for="(c1, index) in categoryList"
             :key="c1.categoryId"
+            :class="{ cur: currentIndex == index }"
           >
-            <h3>
-              <a href="">{{ c1.categoryName }}</a>
+            <h3 @mouseenter="changeIndex(index)" @mouseleave="leaveIndex()">
+              <!-- <a href="">{{ c1.categoryName }}</a> -->
+              <a
+                :data-categoryName="c1.categoryName"
+                :data-category1Id="c1.categoryId"
+                >{{ c1.categoryName }}</a
+              >
             </h3>
             <div class="item-list clearfix">
-              <div class="subitem">
+              <div
+                class="subitem"
+                v-for="(c2, index) in c1.categoryChild"
+                :key="c2.categoryId"
+              >
                 <dl class="fore">
                   <dt>
-                    <a href="">电子书</a>
+                    <!-- <a href="">{{ c2.categoryName }}</a> -->
+                    <a
+                      :data-categoryName="c1.categoryName"
+                      :data-category2Id="c2.categoryId"
+                      >{{ c2.categoryName }}</a
+                    >
                   </dt>
                   <dd>
-                    <em>
-                      <a href="">婚恋/两性</a>
-                    </em>
-                    <em>
-                      <a href="">文学</a>
-                    </em>
-                    <em>
-                      <a href="">经管</a>
-                    </em>
-                    <em>
-                      <a href="">畅读VIP</a>
+                    <em
+                      v-for="(c3, index) in c2.categoryChild"
+                      :key="c3.categoryId"
+                    >
+                      <!-- <a href="">{{ c3.categoryName }}</a> -->
+                      <a
+                        :data-categoryName="c1.categoryName"
+                        :data-category3Id="c3.categoryId"
+                        >{{ c3.categoryName }}</a
+                      >
                     </em>
                   </dd>
                 </dl>
@@ -48,6 +63,8 @@
           </div>
         </div>
       </div>
+      </transition>
+     </div>
     </div>
   </div>
 </template>
@@ -57,12 +74,21 @@ import { mapState } from "vuex";
 export default {
   name: "typenav",
   data() {
-    return {};
+    return {
+      currentIndex: -1,
+      show: true,
+    };
   },
+
   components: {},
+
   mounted() {
-    this.$store.dispatch("categoryList");
+
+    if (this.$route.path != "/home") {
+      this.show = false;
+    }
   },
+
   computed: {
     ...mapState({
       categoryList: (state) => {
@@ -70,6 +96,42 @@ export default {
         return state.home.categoryList;
       },
     }),
+  },
+  methods: {
+    changeIndex(index) {
+      console.log(index);
+      this.currentIndex = index;
+    },
+    leaveIndex(index) {
+      this.currentIndex = -1;
+    },
+    goSearch(event) {
+      let element = event.target;
+      let { categoryname, category1id, category2id, category3id } =
+        element.dataset;
+      if (categoryname) {
+        // alert('nihao')
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
+        if (category1id) {
+          query.category1Id = category1id;
+        } else if (category2id) {
+          query.category2Id = category2id;
+        } else {
+          query.category3Id = category3id;
+        }
+        location.query = query;
+        this.$router.push(location);
+      }
+    },
+    entershow() {
+      this.show = true;
+    },
+    leaveShow() {
+     if(this.$route.path!='/home'){
+      this.show = false;
+     }
+    },
   },
 };
 </script>
@@ -102,6 +164,7 @@ export default {
         line-height: 45px;
         font-size: 16px;
         color: #333;
+        text-decoration: none;
       }
     }
 
@@ -118,7 +181,7 @@ export default {
       .all-sort-list2 {
         .item {
           h3 {
-            line-height: 30px;
+            line-height: 28px;
             font-size: 14px;
             font-weight: 400;
             overflow: hidden;
@@ -126,6 +189,7 @@ export default {
             margin: 0;
 
             a {
+              text-decoration: none;
               color: #333;
             }
           }
@@ -187,10 +251,23 @@ export default {
           &:hover {
             .item-list {
               display: block;
+              text-decoration: none;
             }
           }
         }
+        .cur {
+          background: hotpink;
+        }
       }
+    }
+    .sort-enter{
+      height: 0px;
+    }
+    .sort-enter-to{
+      height: 461px;
+    }
+    .sort-enter-active{
+      transition: all .5s linear;
     }
   }
 }
