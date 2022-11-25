@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import typenav from './components/TypeNav/typenav.vue'
 import NProgress from 'nprogress';
+import '@/mock/mockServe'
 
 Vue.config.productionTip = false
 

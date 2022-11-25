@@ -12,7 +12,7 @@ export default new VueRouter({
   name:'search',
   routes: [
     {
-      path: "/home",
+      path: "/home/:keyword?",
       component: home,
       meta: { show: true },
     },
