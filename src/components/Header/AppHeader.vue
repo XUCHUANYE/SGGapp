@@ -60,7 +60,9 @@ export default {
   components: {},
   methods:{
     goSearch(){
-      this.$router.push("/search/" + this.keyword +"?k=" + this.keyword.toUpperCase())
+     if(this.$route.params){
+      location
+     }
       
     }
   }
