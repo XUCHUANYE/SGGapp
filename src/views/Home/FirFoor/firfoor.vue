@@ -88,12 +88,14 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "firfoor",
   data() {
     return {};
   },
   components: {},
+ 
 };
 </script>
 

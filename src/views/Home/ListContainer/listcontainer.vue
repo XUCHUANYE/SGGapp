@@ -114,7 +114,7 @@ export default {
   components: {},
   mounted() {
     this.$store.dispatch("getBannerList");
-    this.$store.dispatch('getFloorList')
+    // this.$store.dispatch('getFloorList')
     // console.log(banner);
   },
   // computed: {
@@ -128,11 +128,7 @@ export default {
         return state.home.bannerList;
       },
     }),
-    ...mapState({
-      floorlist:(state)=>{
-        return state.home.floorlist
-      }
-    })
+   
   },
   watch: {
     bannerList: {
