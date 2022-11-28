@@ -5,7 +5,7 @@
     <recommed></recommed>
     <rank></rank>
     <like></like>
-    <firfoor v-for="(floor,index) in floorlist" :key="floor.id"></firfoor>
+    <firfoor v-for="(floor,index) in floorlist" :key="floor.id" :list="floor"></firfoor>
     
     <brand></brand>
   </div>

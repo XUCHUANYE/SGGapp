@@ -5,15 +5,13 @@ import store from "./store";
 import typenav from "./components/TypeNav/typenav.vue";
 import NProgress from "nprogress";
 import "@/mock/mockServe";
-// import VueAwesomeSwiper from "vue-awesome-swiper";
-// import 'swiper/swiper-bundle.css';
-import 'swiper/css/swiper.css';
-
-// import "swiper/swiper/swiper.css";
+import "swiper/css/swiper.css";
+import carousel from "@/components/Carousel/carousel.vue";
 
 Vue.config.productionTip = false;
 
 Vue.component(typenav.name, typenav);
+Vue.component(carousel.name, carousel);
 // Vue.use(VueAwesomeSwiper);
 
 // import { reCategoryList } from "@/api";
