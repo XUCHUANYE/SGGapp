@@ -1,4 +1,4 @@
-import { reqCategoryList } from "@/api/index";
+import { reqCategoryList,reqGetBannerList } from "@/api/index";
 
 
 const state = {
@@ -15,12 +15,17 @@ const mutations = {
 const actions = {
  async categoryList({commit}) {
     let result = await  reqCategoryList();
-    console.log(result);
+    // console.log(result);
     if(result.code==200){
       commit("CATEGORYLIST",result.data)
     };
   },
+ async getBannerList(){
+   let result=await reqGetBannerList();
+   console.log(result);
+  }
 };
+
 const getters = {};
 
 export default {
