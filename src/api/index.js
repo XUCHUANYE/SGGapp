@@ -1,7 +1,5 @@
 import requests from "./request";
-
-import mockRequest from "./mockRequest";
-// import { get } from "core-js/core/dict";
+import mockRequests from "./mockAjax";
 
 export const reqCategoryList = () => {
   return requests({
@@ -10,4 +8,24 @@ export const reqCategoryList = () => {
   });
 };
 
-export const reqGetBannerList = () => mockRequest.get("/banner");
+export const reqGetBannerList = () => {
+  return mockRequests({
+    url: "/banner",
+    method: "get",
+  });
+};
+
+export const reqGetFloorList = () => {
+  return mockRequests({
+    url: "/floor",
+    method: "get",
+  });
+};
+
+export const reqGetSearchInfo = (params) => {
+  return requests({
+    url: "/list",
+    method:'post',
+    data:params
+  });
+};

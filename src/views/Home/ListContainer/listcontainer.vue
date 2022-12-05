@@ -3,28 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="@/assets/images/home/banner1.jpg" />
-            </div>
-            <!-- <div class="swiper-slide">
-                                <img src="./images/home/banner2.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/home/banner3.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/home/banner4.jpg" />
-                            </div> -->
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+       <carousel :list="bannerList"></carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -100,15 +79,56 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+// import Carousel from '@/components/Carousel/carousel.vue';
 export default {
   name: "listcontainer",
   data() {
     return {};
   },
-  components: {},
-  mounted(){
-    this.$store.dispatch('getBannerList', );
-  }
+  // components: {Carousel},
+  mounted() {
+    this.$store.dispatch("getBannerList");
+    // this.$store.dispatch('getFloorList')
+    // console.log(banner);
+  },
+  // computed: {
+  //   ...mapState({
+  //     bannerList: (state) => state.home.bannerList,
+  //   }),
+  // },
+  computed: {
+    ...mapState({
+      bannerList: (state) => {
+        return state.home.bannerList;
+      },
+    }),
+   
+  },
+  // watch: {
+  //   bannerList: {
+  //     immediate:true,
+  //     handler(newvalue, oldvalue) {
+  //     this.$nextTick(()=>{
+  //       var mySwiper = new Swiper(this.$refs.cur, {
+  //         loop: true, // 循环模式选项
+
+  //         // 如果需要分页器
+  //         pagination: {
+  //           el: ".swiper-pagination",
+  //           clickable: true,
+  //         },
+
+  //         // 如果需要前进后退按钮
+  //         navigation: {
+  //           nextEl: ".swiper-button-next",
+  //           prevEl: ".swiper-button-prev",
+  //         },
+  //       }); 
+  //     })
+  //     },
+  //   },
+  // },
 };
 </script>
 <style scoped lang="less">

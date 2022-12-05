@@ -13,12 +13,15 @@
     "less-loader": "^5.0.0",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
+    "swiper": "^5.4.5",
     "vue": "^2.6.14",
+    "vue-awesome-swiper": "^5.0.1",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
     "webpack": "^5.75.0"
   },
   "devDependencies": {
+    "@types/swiper": "^6.0.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",

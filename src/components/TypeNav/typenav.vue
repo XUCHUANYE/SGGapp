@@ -92,14 +92,15 @@ export default {
   computed: {
     ...mapState({
       categoryList: (state) => {
-        console.log(state);
+        // console.log(state);
         return state.home.categoryList;
       },
     }),
   },
+  
   methods: {
     changeIndex(index) {
-      console.log(index);
+      // console.log(index);
       this.currentIndex = index;
     },
     leaveIndex(index) {
