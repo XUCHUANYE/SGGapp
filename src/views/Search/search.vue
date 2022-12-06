@@ -11,10 +11,10 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName
+              }}<i @click="removeCategoryName">×</i>
+            </li>
           </ul>
         </div>
 
@@ -70,7 +70,7 @@
                     <a
                       target="_blank"
                       href="item.html"
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
+                      title="促销信息，下单即赠送三个月CIBN视频会员卡!【小米电视新品4A 58 火爆预约中】"
                       >{{ goods.title }}</a
                     >
                   </div>
@@ -130,13 +130,14 @@
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
 import { mapGetters } from "vuex";
+// import { get } from "http";
 export default {
   name: "search",
   data() {
     return {
       searchParams: {
-        category1Id:'' ,
-        category2Id:'',
+        category1Id: "",
+        category2Id: "",
         category3Id: "",
         categoryName: "",
         keyword: "",
@@ -149,8 +150,14 @@ export default {
     };
   },
   components: { SearchSelector },
-  beforeMount(){
-Object.assign
+  beforeMount() {
+    // this.searchParams.category1Id = this.$route.query.category1Id;
+    // this.searchParams.category2Id = this.$route.query.category2Id;
+    // this.searchParams.category3Id = this.$route.query.category3Id;
+    // this.searchParams.categoryName = this.$route.query.categoryName;
+    // this.searchParams.keyword = this.$route.params.keyword;
+
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
   mounted() {
     this.getData();
@@ -161,6 +168,23 @@ Object.assign
   methods: {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
+    },
+    removeCategoryName() {
+      this.searchParams.categoryName = undefined;
+      this.searchParams.category1Id = undefined
+      this.searchParams.category3Id = undefined
+      this.searchParams.category2Id = undefined
+      this.getData();
+    },
+  },
+  watch: {
+    $route(newValue, oldValue) {
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      console.log(this.searchParams);
+      this.getData(), 
+      this.searchParams.category1Id = "";
+      this.searchParams.category2Id = "";
+      this.searchParams.category3Id = "";
     },
   },
 };
