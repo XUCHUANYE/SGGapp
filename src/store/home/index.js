@@ -28,7 +28,7 @@ const actions = {
   },
   async getBannerList({ commit }) {
     let result = await reqGetBannerList();
-    // console.log(result.data);
+    console.log(result.data);
     if (result.code == 200) {
       commit("GETBANNERLIST", result.data);
     }
@@ -41,6 +41,7 @@ const actions = {
     }
   },
 };
+
 const getters = {};
 
 export default {

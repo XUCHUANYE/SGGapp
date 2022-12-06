@@ -80,7 +80,6 @@
 
 <script>
 import { mapState } from "vuex";
-import Swiper from "swiper";
 // import Carousel from '@/components/Carousel/carousel.vue';
 export default {
   name: "listcontainer",

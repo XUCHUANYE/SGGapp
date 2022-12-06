@@ -75,6 +75,14 @@ export default {
         this.$router.push(location);
       }
     },
+    trademarkInfo(trademark){
+console.log(trademark);
+    }
+  },
+  mounted() {
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
   },
 };
 </script>
