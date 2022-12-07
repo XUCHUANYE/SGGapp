@@ -19,13 +19,14 @@
               {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
             </li>
             <li class="with-x" v-if="searchParams.trademark">
-              {{ searchParams.trademark.split(':')[1] }}<i @click="removetrademark">×</i>
+              {{ searchParams.trademark.split(":")[1]
+              }}<i @click="removetrademark">×</i>
             </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @tradmarkInfo="tradmarkInfo" />
+        <SearchSelector @tradmarkInfo="tradmarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -195,13 +196,17 @@ export default {
     },
     tradmarkInfo(trademark) {
       console.log(trademark);
-      this.searchParams.trademark=`${trademark.tmId}:${trademark.tmName}`;
-      this.getData()
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getData();
     },
-    removetrademark(){
+    removetrademark() {
       this.searchParams.trademark = undefined;
-      this.getData()
-    }
+      this.getData();
+    },
+    attrInfo(attr, attrValue) {
+      let props = `${attr.attrId}:${attr.attrName}:${attr.attrValue}`;
+      this.searchParams.props.push(props)
+    },
   },
   watch: {
     $route(newValue, oldValue) {
