@@ -204,7 +204,7 @@ export default {
       this.getData();
     },
     attrInfo(attr, attrValue) {
-      let props = `${attr.attrId}:${attr.attrValue}:${attr.attrName}`;
+      let props = `${attr.attrId}:${attr.attrName}:${attr.attrValue}`;
       this.searchParams.props.push(props)
     },
   },
