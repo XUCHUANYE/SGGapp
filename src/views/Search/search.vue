@@ -22,6 +22,14 @@
               {{ searchParams.trademark.split(":")[1]
               }}<i @click="removetrademark">×</i>
             </li>
+            <li
+              class="with-x"
+              v-for="(attrValue, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrValue.split(":")[1]
+              }}<i @click="removeattrValue(index)">×</i>
+            </li>
           </ul>
         </div>
 
@@ -151,7 +159,7 @@ export default {
         order: "",
         pageNo: 1,
         pageSize: 10,
-        props: [""],
+        props: [],
         trademark: "",
       },
     };
@@ -204,8 +212,16 @@ export default {
       this.getData();
     },
     attrInfo(attr, attrValue) {
-      let props = `${attr.attrId}:${attr.attrName}:${attr.attrValue}`;
-      this.searchParams.props.push(props)
+      console.log(attrValue);
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      if (this.searchParams.props.indexOf(props)) {
+        this.searchParams.props.push(props);
+      }
+      this.getData();
+    },
+    removeattrValue(index) {
+      this.searchParams.props.splice(index,1);
+      this.getData();
     },
   },
   watch: {
