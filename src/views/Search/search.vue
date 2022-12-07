@@ -15,11 +15,18 @@
               {{ searchParams.categoryName
               }}<i @click="removeCategoryName">×</i>
             </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
+            </li>
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(":")[1]
+              }}<i @click="removetrademark">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @tradmarkInfo="tradmarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -171,18 +178,41 @@ export default {
     },
     removeCategoryName() {
       this.searchParams.categoryName = undefined;
-      this.searchParams.category1Id = undefined
-      this.searchParams.category3Id = undefined
-      this.searchParams.category2Id = undefined
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category3Id = undefined;
+      this.searchParams.category2Id = undefined;
       this.getData();
+      if (this.$route.params) {
+        this.$router.push({ name: "search", params: this.$route.params });
+      }
+    },
+    removeKeyword() {
+      this.searchParams.keyword = "";
+      this.getData();
+      this.$bus.$emit("clear");
+      if (this.$route.query) {
+        this.$router.push({ name: "search", query: this.$route.query });
+      }
+    },
+    tradmarkInfo(trademark) {
+      console.log(trademark);
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getData();
+    },
+    removetrademark() {
+      this.searchParams.trademark = undefined;
+      this.getData();
+    },
+    attrInfo(attr, attrValue) {
+      let props = `${attr.attrId}:${attr.attrValue}:${attr.attrName}`;
+      this.searchParams.props.push(props)
     },
   },
   watch: {
     $route(newValue, oldValue) {
       Object.assign(this.searchParams, this.$route.query, this.$route.params);
-      console.log(this.searchParams);
-      this.getData(), 
-      this.searchParams.category1Id = "";
+      // console.log(this.searchParams);
+      this.getData(), (this.searchParams.category1Id = "");
       this.searchParams.category2Id = "";
       this.searchParams.category3Id = "";
     },

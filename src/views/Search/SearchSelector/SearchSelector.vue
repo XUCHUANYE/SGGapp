@@ -4,7 +4,11 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="(trademark, index) in trademarkList" :key="trademark.tmId">
+          <li
+            v-for="(trademark, index) in trademarkList"
+            :key="trademark.tmId"
+            @click="trademarkhandler(trademark)"
+          >
             {{ trademark.tmName }}
           </li>
         </ul>
@@ -18,14 +22,14 @@
       class="type-wrap"
       v-for="(attr, index) in attrsList"
       :key="attr.attrId"
+      @click="attrInfo(attr, attrValue)"
     >
-      <div class="fl key">{{attr.attrName}}</div>
+      <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in  attr.attrValueList" :key="index">
-            <a>{{attrValue}}</a>
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index" >
+            <a>{{ attrValue }}</a>
           </li>
-        
         </ul>
       </div>
       <div class="fl ext"></div>
@@ -39,6 +43,15 @@ export default {
   name: "SearchSelector",
   computed: {
     ...mapGetters(["trademarkList", "attrsList"]),
+  },
+  methods: {
+    trademarkhandler(trademark) {
+      // console.log(trademark);
+      this.$emit("tradmarkInfo", trademark);
+    },
+    attrInfo(attr, attrValue) {
+      this.$emit("attrInfo", attr, attrValue);
+    },
   },
 };
 </script>
