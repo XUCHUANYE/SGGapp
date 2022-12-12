@@ -24,10 +24,18 @@
             </li>
             <li
               class="with-x"
+<<<<<<< HEAD
               v-for="(prop, index) in searchParams.props"
               :key="index"
             >
               {{ prop.split(":")[1] }}<i @click="removeprop(index)">×</i>
+=======
+              v-for="(attrValue, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrValue.split(":")[1]
+              }}<i @click="removeattrValue(index)">×</i>
+>>>>>>> 6ba304abcde97de436a032ef0bc1df9d1b67b2a8
             </li>
           </ul>
         </div>
@@ -187,6 +195,7 @@ export default {
       this.getData();
     },
     attrInfo(attr, attrValue) {
+<<<<<<< HEAD
       let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
       // console.log(props);
       this.searchParams.props.push(props);
@@ -214,6 +223,17 @@ export default {
       //本次存储持久化
       //  localStorage.setItem('pageNo',pageNo);
       //再次发请求
+=======
+      console.log(attrValue);
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      if (this.searchParams.props.indexOf(props)) {
+        this.searchParams.props.push(props);
+      }
+      this.getData();
+    },
+    removeattrValue(index) {
+      this.searchParams.props.splice(index,1);
+>>>>>>> 6ba304abcde97de436a032ef0bc1df9d1b67b2a8
       this.getData();
     },
   },
