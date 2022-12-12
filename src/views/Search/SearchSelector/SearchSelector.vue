@@ -22,24 +22,16 @@
       class="type-wrap"
       v-for="(attr, index) in attrsList"
       :key="attr.attrId"
-<<<<<<< HEAD
       
-=======
-     
->>>>>>> 6ba304abcde97de436a032ef0bc1df9d1b67b2a8
     >
       <div class="fl key">{{ attr.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-<<<<<<< HEAD
           <li
             v-for="(attrValue, index) in attr.attrValueList"
             :key="index"
             @click="attrInfo(attr, attrValue)"
           >
-=======
-          <li v-for="(attrValue, index) in attr.attrValueList" :key="attrValue" @click="attrInfo(attr, attrValue)">
->>>>>>> 6ba304abcde97de436a032ef0bc1df9d1b67b2a8
             <a>{{ attrValue }}</a>
           </li>
         </ul>
@@ -62,14 +54,8 @@ export default {
       this.$emit("tradmarkInfo", trademark);
     },
     attrInfo(attr, attrValue) {
-<<<<<<< HEAD
       this.$emit("attrInfo", attr, attrValue);
       // console.log(attr,attrValue);
-=======
-     
-      // console.log(attrValue,);
-      this.$emit('attrInfo',attr,attrValue)
->>>>>>> 6ba304abcde97de436a032ef0bc1df9d1b67b2a8
     },
   },
 };
