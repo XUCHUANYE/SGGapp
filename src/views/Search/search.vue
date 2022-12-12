@@ -22,6 +22,13 @@
               {{ searchParams.trademark.split(":")[1]
               }}<i @click="removetrademark">×</i>
             </li>
+            <li
+              class="with-x"
+              v-for="(prop, index) in searchParams.props"
+              :key="index"
+            >
+              {{ prop.split(":")[1] }}<i @click="removeprop(index)">×</i>
+            </li>
           </ul>
         </div>
 
@@ -33,23 +40,12 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: isOne }" @click="changeorder('1')">
+                  <a>综合<span>⬇</span></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+
+                <li :class="{ active: isTwo }" @click="changeorder('2')">
+                  <a>价格⬆</a>
                 </li>
               </ul>
             </div>
@@ -63,9 +59,9 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank">
+                    <router-link :to="`/detail/${goods.id}`">
                       <img :src="goods.defaultImg" />
-                    </a>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -99,35 +95,13 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <pagination
+            :total="total"
+            :pageSize="searchParams.pageSize"
+            :pageNo="searchParams.pageNo"
+            :continues="5"
+            @currentPage="currentPage"
+          />
         </div>
       </div>
     </div>
@@ -136,10 +110,13 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import Pagination from "@/components/Pagination/pagination.vue";
+// import { get } from "http";
 // import { get } from "http";
 export default {
   name: "search",
+  components: { SearchSelector },
   data() {
     return {
       searchParams: {
@@ -148,15 +125,14 @@ export default {
         category3Id: "",
         categoryName: "",
         keyword: "",
-        order: "",
+        order: "1:desc",
         pageNo: 1,
         pageSize: 10,
-        props: [""],
+        props: [],
         trademark: "",
       },
     };
   },
-  components: { SearchSelector },
   beforeMount() {
     // this.searchParams.category1Id = this.$route.query.category1Id;
     // this.searchParams.category2Id = this.$route.query.category2Id;
@@ -171,6 +147,13 @@ export default {
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf("1") != 1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != 2;
+    },
+    ...mapState({ total: (state) => state.search.searchList.total }),
   },
   methods: {
     getData() {
@@ -204,8 +187,34 @@ export default {
       this.getData();
     },
     attrInfo(attr, attrValue) {
-      let props = `${attr.attrId}:${attr.attrName}:${attr.attrValue}`;
-      this.searchParams.props.push(props)
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      // console.log(props);
+      this.searchParams.props.push(props);
+      this.getData();
+    },
+    removeprop(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getData();
+    },
+    changeorder(flag) {
+      let originorder = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+      let neworder = "";
+      if (flag == originorder) {
+        neworder = `${originorder}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        neworder = `${flag}:desc`;
+      }
+      this.searchParams.order = neworder;
+      this.getData();
+    },
+    currentPage(pageNo) {
+      //修改给服务器携带的参数
+      this.searchParams.pageNo = pageNo;
+      //本次存储持久化
+      //  localStorage.setItem('pageNo',pageNo);
+      //再次发请求
+      this.getData();
     },
   },
   watch: {

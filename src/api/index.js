@@ -25,7 +25,14 @@ export const reqGetFloorList = () => {
 export const reqGetSearchInfo = (params) => {
   return requests({
     url: "/list",
-    method:'post',
-    data:params
+    method: "post",
+    data: params,
+  });
+};
+
+export const reqGetGoodsInfo = (skuId) => {
+  return requests({
+    url: `/item/${ skuId }`,
+    method: "get",
   });
 };
